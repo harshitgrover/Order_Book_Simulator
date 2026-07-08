@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limit Order Book & Avellaneda-Stoikov Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --panel-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --ask-color: #ef4444;
+            --bid-color: #22c55e;
+            --accent: #3b82f6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex: 1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card .label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .pnl-positive { color: var(--bid-color); }
+        .pnl-negative { color: var(--ask-color); }
+
+        .order-book {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .book-side {
+            flex: 1;
+        }
+
+        .book-side h3 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .asks h3 { color: var(--ask-color); }
+        .bids h3 { color: var(--bid-color); }
+
+        .book-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0.8rem;
+            margin-bottom: 0.2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            transition: background-color 0.2s;
+        }
+
+        .book-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .asks .book-row .price { color: var(--ask-color); }
+        .bids .book-row .price { color: var(--bid-color); }
+
+        .qty { color: var(--text-primary); }
+
+        /* Micro-animations */
+        @keyframes flash-green {
+            0% { background-color: rgba(34, 197, 94, 0.3); }
+            100% { background-color: rgba(0, 0, 0, 0.2); }
+        }
+        @keyframes flash-red {
+            0% { background-color: rgba(239, 68, 68, 0.3); }
+            100% { background-color: rgba(0, 0, 0, 0.2); }
+        }
+
+        .flash-bid { animation: flash-green 0.3s ease-out; }
+        .flash-ask { animation: flash-red 0.3s ease-out; }
+    </style>
+</head>
+<body>
+
+    <h1>Limit Order Book & Avellaneda-Stoikov Simulator</h1>
+
+    <div class="dashboard">
+        <div class="panel">
+            <h2>Bot Performance</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">Inventory (Shares)</div>
+                    <div class="value" id="inventory">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Mark-to-Market PnL</div>
+                    <div class="value" id="pnl">$0.00</div>
+                </div>
+                <div class="stat-card" style="grid-column: span 2;">
+                    <div class="label">Cash</div>
+                    <div class="value" id="cash">$0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Current Bid</div>
+                    <div class="value" id="current-bid">N/A</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Current Ask</div>
+                    <div class="value" id="current-ask">N/A</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Bid Qty</div>
+                    <div class="value" id="bid-qty">N/A</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Ask Qty</div>
+                    <div class="value" id="ask-qty">N/A</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Live Order Book</h2>
+            <div class="order-book">
+                <div class="book-side bids">
+                    <h3>BIDS</h3>
+                    <div id="bids-container"></div>
+                </div>
+                <div class="book-side asks">
+                    <h3>ASKS</h3>
+                    <div id="asks-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard" style="margin-top: 2rem;">
+        <div class="panel" style="width: 100%;">
+            <h2>PnL History (Updates every 60s)</h2>
+            <canvas id="pnlChart" height="60"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let currentPnl = 0;
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('pnlChart').getContext('2d');
+        const pnlChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Mark-to-Market PnL ($)',
+                    data: [],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        async function fetchState() {
+            try {
+                const response = await fetch('/api/state');
+                const data = await response.json();
+                
+                // Update bot stats
+                document.getElementById('inventory').innerText = data.bot_inventory;
+                document.getElementById('cash').innerText = '$' + data.bot_cash.toFixed(2);
+                
+                const pnlEl = document.getElementById('pnl');
+                pnlEl.innerText = '$' + data.bot_pnl.toFixed(2);
+                pnlEl.className = 'value ' + (data.bot_pnl >= 0 ? 'pnl-positive' : 'pnl-negative');
+
+                document.getElementById('current-bid').innerText = data.bot_bid > 0 ? '$' + data.bot_bid.toFixed(2) : 'N/A';
+                document.getElementById('current-ask').innerText = data.bot_ask > 0 ? '$' + data.bot_ask.toFixed(2) : 'N/A';
+                document.getElementById('bid-qty').innerText = data.bot_bid_qty > 0 ? data.bot_bid_qty : 'N/A';
+                document.getElementById('ask-qty').innerText = data.bot_ask_qty > 0 ? data.bot_ask_qty : 'N/A';
+
+                // Update Bids
+                const bidsContainer = document.getElementById('bids-container');
+                bidsContainer.innerHTML = '';
+                data.bids.forEach(level => {
+                    const row = document.createElement('div');
+                    row.className = 'book-row flash-bid';
+                    row.innerHTML = `<span class="price">${level[0].toFixed(2)}</span><span class="qty">${level[1]}</span>`;
+                    bidsContainer.appendChild(row);
+                });
+
+                // Update Asks (Reverse so lowest ask is at bottom, wait, in UI usually asks are highest to lowest, bids highest to lowest)
+                const asksContainer = document.getElementById('asks-container');
+                asksContainer.innerHTML = '';
+                // The C++ API returns asks from lowest to highest. Let's reverse them for standard order book view.
+                [...data.asks].reverse().forEach(level => {
+                    const row = document.createElement('div');
+                    row.className = 'book-row flash-ask';
+                    row.innerHTML = `<span class="price">${level[0].toFixed(2)}</span><span class="qty">${level[1]}</span>`;
+                    asksContainer.appendChild(row);
+                });
+                
+                currentPnl = data.bot_pnl;
+            } catch (err) {
+                console.error("Failed to fetch state:", err);
+            }
+        }
+
+        function updateChart() {
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                            now.getMinutes().toString().padStart(2, '0') + ':' + 
+                            now.getSeconds().toString().padStart(2, '0');
+            
+            pnlChart.data.labels.push(timeStr);
+            pnlChart.data.datasets[0].data.push(currentPnl);
+            
+            // Keep last 30 data points
+            if (pnlChart.data.labels.length > 30) {
+                pnlChart.data.labels.shift();
+                pnlChart.data.datasets[0].data.shift();
+            }
+            
+            pnlChart.update();
+        }
+
+        // Poll API every 100ms for live book
+        setInterval(fetchState, 100);
+        
+        // Update Chart every 60 seconds (with an initial point at 1 second)
+        setTimeout(updateChart, 1000);
+        setInterval(updateChart, 60000);
+    </script>
+</body>
+</html>

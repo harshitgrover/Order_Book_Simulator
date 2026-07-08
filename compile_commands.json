@@ -1,0 +1,182 @@
+[
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build",
+  "command": "/usr/bin/c++  -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src -std=gnu++17 -arch arm64 -o CMakeFiles/engine.dir/src/engine/order_book.cpp.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/engine/order_book.cpp",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/engine/order_book.cpp",
+  "output": "CMakeFiles/engine.dir/src/engine/order_book.cpp.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build",
+  "command": "/usr/bin/c++  -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src -std=gnu++17 -arch arm64 -o CMakeFiles/simulation.dir/src/simulation/noise_trader.cpp.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/simulation/noise_trader.cpp",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/simulation/noise_trader.cpp",
+  "output": "CMakeFiles/simulation.dir/src/simulation/noise_trader.cpp.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build",
+  "command": "/usr/bin/c++  -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src -std=gnu++17 -arch arm64 -o CMakeFiles/bot.dir/src/bot/market_maker.cpp.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/bot/market_maker.cpp",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/bot/market_maker.cpp",
+  "output": "CMakeFiles/bot.dir/src/bot/market_maker.cpp.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build",
+  "command": "/usr/bin/c++  -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src -std=gnu++17 -arch arm64 -o CMakeFiles/simulator.dir/src/main.cpp.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/main.cpp",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src/main.cpp",
+  "output": "CMakeFiles/simulator.dir/src/main.cpp.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build",
+  "command": "/usr/bin/c++  -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/include -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest -std=gnu++17 -arch arm64 -o CMakeFiles/run_tests.dir/tests/test_order_book.cpp.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/tests/test_order_book.cpp",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/tests/test_order_book.cpp",
+  "output": "CMakeFiles/run_tests.dir/tests/test_order_book.cpp.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/src -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -std=gnu++17 -arch arm64 -o CMakeFiles/run_benchmarks.dir/tests/benchmark_order_book.cpp.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/tests/benchmark_order_book.cpp",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/tests/benchmark_order_book.cpp",
+  "output": "CMakeFiles/run_benchmarks.dir/tests/benchmark_order_book.cpp.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/include -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest -std=c++17 -arch arm64  -DGTEST_HAS_PTHREAD=1   -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-build/googlemock",
+  "command": "/usr/bin/c++  -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock/include -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/include -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest -std=c++17 -arch arm64  -DGTEST_HAS_PTHREAD=1   -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-build/googletest",
+  "command": "/usr/bin/c++  -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest -std=c++17 -arch arm64  -DGTEST_HAS_PTHREAD=1   -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-build/googletest",
+  "command": "/usr/bin/c++  -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/include -isystem /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest -std=c++17 -arch arm64  -DGTEST_HAS_PTHREAD=1   -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/benchmark.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/benchmark.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/benchmark_api_internal.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_api_internal.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_api_internal.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/benchmark_api_internal.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/benchmark_name.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_name.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_name.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/benchmark_name.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/benchmark_register.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_register.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_register.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/benchmark_register.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/benchmark_runner.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_runner.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_runner.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/benchmark_runner.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/check.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/check.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/check.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/check.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/colorprint.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/colorprint.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/colorprint.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/colorprint.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/commandlineflags.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/commandlineflags.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/commandlineflags.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/commandlineflags.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/complexity.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/complexity.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/complexity.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/complexity.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/console_reporter.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/console_reporter.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/console_reporter.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/console_reporter.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/counter.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/counter.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/counter.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/counter.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/csv_reporter.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/csv_reporter.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/csv_reporter.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/csv_reporter.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/json_reporter.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/json_reporter.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/json_reporter.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/json_reporter.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/perf_counters.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/perf_counters.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/perf_counters.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/perf_counters.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/reporter.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/reporter.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/reporter.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/reporter.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/statistics.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/statistics.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/statistics.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/statistics.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/string_util.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/string_util.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/string_util.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/string_util.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/sysinfo.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/sysinfo.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/sysinfo.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/sysinfo.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark.dir/timers.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/timers.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/timers.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark.dir/timers.cc.o"
+},
+{
+  "directory": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-build/src",
+  "command": "/usr/bin/c++ -DBENCHMARK_STATIC_DEFINE -DHAVE_POSIX_REGEX -DHAVE_STD_REGEX -DHAVE_STEADY_CLOCK -DHAVE_THREAD_SAFETY_ATTRIBUTES -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/include -I/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src   -Wall  -Wextra  -Wshadow  -Wfloat-equal  -Wold-style-cast  -Werror  -Wsuggest-override  -pedantic  -pedantic-errors  -Wshorten-64-to-32  -fstrict-aliasing  -Wno-deprecated-declarations  -Wno-deprecated  -Wstrict-aliasing  -Wthread-safety -std=c++11 -arch arm64 -fvisibility=hidden -fvisibility-inlines-hidden -o CMakeFiles/benchmark_main.dir/benchmark_main.cc.o -c /Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_main.cc",
+  "file": "/Users/harshit/Documents/Harshit/Coding/Projects/Order_Book_Simulator/build/_deps/googlebenchmark-src/src/benchmark_main.cc",
+  "output": "_deps/googlebenchmark-build/src/CMakeFiles/benchmark_main.dir/benchmark_main.cc.o"
+}
+]

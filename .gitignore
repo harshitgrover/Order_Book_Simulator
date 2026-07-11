@@ -40,10 +40,6 @@ venv/
 __pycache__/
 *.pyc
 
-# Simulation output
-sim_results.csv
-performance_plot.png
-
 # IDE and OS files
 .DS_Store
 .vscode/

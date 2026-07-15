@@ -190,14 +190,20 @@
 
     <div style="display: flex; justify-content: center; align-items: center; max-width: 1600px; width: 100%; margin-bottom: 2rem; position: relative;">
         <h1 style="margin-bottom: 0;">Limit Order Book & Avellaneda-Stoikov Simulator</h1>
-        <button id="pause-all" onclick="togglePauseAll()" class="pause-btn" style="position: absolute; right: 0;">⏸ Pause All</button>
+        <div style="position: absolute; right: 0; display: flex; gap: 1rem;">
+            <button id="reset-btn" onclick="resetSimulation()" class="pause-btn">🔄 Reset</button>
+            <button id="pause-all" onclick="togglePauseAll()" class="pause-btn">⏸ Pause All</button>
+        </div>
     </div>
 
     <div class="dashboard">
         <div class="panel" id="bot1-panel" style="flex: 1.2;">
             <div class="panel-header">
                 <h2>Avellaneda-Stoikov (2008)</h2>
-                <button id="pause-bot1" onclick="togglePause('bot1')" class="pause-btn">⏸ Pause</button>
+                <div style="position: absolute; right: 0; display: flex; gap: 0.3rem;">
+                    <button onclick="resetLocal('bot1')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Reset Bot 1">🔄</button>
+                    <button id="pause-bot1" onclick="togglePause('bot1')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Pause/Resume Bot 1">⏸</button>
+                </div>
             </div>
             <div class="stats-grid">
                 <div class="stat-card">
@@ -230,7 +236,10 @@
         <div class="panel" id="bot2-panel" style="flex: 1.2;">
             <div class="panel-header">
                 <h2>Imbalance-Aware (2018)</h2>
-                <button id="pause-bot2" onclick="togglePause('bot2')" class="pause-btn">⏸ Pause</button>
+                <div style="position: absolute; right: 0; display: flex; gap: 0.3rem;">
+                    <button onclick="resetLocal('bot2')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Reset Bot 2">🔄</button>
+                    <button id="pause-bot2" onclick="togglePause('bot2')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Pause/Resume Bot 2">⏸</button>
+                </div>
             </div>
             <div class="stats-grid">
                 <div class="stat-card">
@@ -263,7 +272,10 @@
         <div class="panel" style="flex: 1.2;">
             <div class="panel-header">
                 <h2>Live Order Book</h2>
-                <button id="pause-gbm" onclick="togglePause('gbm')" class="pause-btn">⏸ Pause</button>
+                <div style="position: absolute; right: 0; display: flex; gap: 0.3rem;">
+                    <button onclick="resetLocal('gbm')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Reset Noise Trader">🔄</button>
+                    <button id="pause-gbm" onclick="togglePause('gbm')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Pause/Resume Noise Trader">⏸</button>
+                </div>
             </div>
             <div class="order-book">
                 <div class="book-side bids">
@@ -346,12 +358,12 @@
             const btn = document.getElementById(btnId);
             if (!btn) return hasStarted;
             if (!isPaused) {
-                btn.textContent = '⏸ Pause';
+                btn.textContent = '⏸';
                 btn.classList.remove('paused');
                 return true;
             } else {
                 btn.classList.add('paused');
-                btn.textContent = hasStarted ? '▶ Resume' : '▶ Start';
+                btn.textContent = '▶';
                 return hasStarted;
             }
         }
@@ -429,8 +441,8 @@
                 // Update Asks (Reverse so lowest ask is at bottom, wait, in UI usually asks are highest to lowest, bids highest to lowest)
                 const asksContainer = document.getElementById('asks-container');
                 asksContainer.innerHTML = '';
-                // The C++ API returns asks from lowest to highest. Let's reverse them for standard order book view.
-                [...data.asks].reverse().forEach(level => {
+                // The C++ API returns asks from lowest to highest.
+                data.asks.forEach(level => {
                     const row = document.createElement('div');
                     row.className = 'book-row flash-ask';
                     row.innerHTML = `<span class="price">${level[0].toFixed(2)}</span><span class="qty">${level[1]}</span>`;
@@ -445,20 +457,25 @@
         }
 
         function updateChart() {
-            const now = new Date();
-            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
-                            now.getMinutes().toString().padStart(2, '0') + ':' + 
-                            now.getSeconds().toString().padStart(2, '0');
+            const pauseAllBtn = document.getElementById('pause-all');
+            const isAllPaused = pauseAllBtn && pauseAllBtn.classList.contains('paused');
             
-            pnlChart.data.labels.push(timeStr);
-            pnlChart.data.datasets[0].data.push(currentPnl1);
-            pnlChart.data.datasets[1].data.push(currentPnl2);
-            
-            // Keep last 30 data points
-            if (pnlChart.data.labels.length > 30) {
-                pnlChart.data.labels.shift();
-                pnlChart.data.datasets[0].data.shift();
-                pnlChart.data.datasets[1].data.shift();
+            if (!isAllPaused) {
+                const now = new Date();
+                const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                                now.getMinutes().toString().padStart(2, '0') + ':' + 
+                                now.getSeconds().toString().padStart(2, '0');
+                
+                pnlChart.data.labels.push(timeStr);
+                pnlChart.data.datasets[0].data.push(currentPnl1);
+                pnlChart.data.datasets[1].data.push(currentPnl2);
+                
+                // Keep last 30 data points
+                if (pnlChart.data.labels.length > 30) {
+                    pnlChart.data.labels.shift();
+                    pnlChart.data.datasets[0].data.shift();
+                    pnlChart.data.datasets[1].data.shift();
+                }
             }
             
             if (activeMode === 'bot1') {
@@ -494,12 +511,42 @@
             }
         }
 
+        async function resetSimulation() {
+            try {
+                await fetch('/api/reset', { method: 'POST' });
+                // Clear chart data
+                pnlChart.data.labels.length = 0;
+                pnlChart.data.datasets[0].data.length = 0;
+                pnlChart.data.datasets[1].data.length = 0;
+                pnlChart.update();
+                
+                // Reset UI start states
+                hasStartedBot1 = false;
+                hasStartedBot2 = false;
+                hasStartedGbm = false;
+                hasStartedAll = false;
+            } catch (err) {
+                console.error("Failed to reset:", err);
+            }
+        }
+
+        async function resetLocal(target) {
+            try {
+                await fetch('/api/reset_' + target, { method: 'POST' });
+                if (target === 'bot1') hasStartedBot1 = false;
+                if (target === 'bot2') hasStartedBot2 = false;
+                if (target === 'gbm') hasStartedGbm = false;
+            } catch (err) {
+                console.error("Failed to reset local target:", err);
+            }
+        }
+
         // Poll API every 100ms for live book
         setInterval(fetchState, 100);
         
-        // Update Chart every 60 seconds (with an initial point at 1 second)
+        // Update Chart every 1 second
         setTimeout(updateChart, 1000);
-        setInterval(updateChart, 60000);
+        setInterval(updateChart, 1000);
     </script>
 </body>
 </html>

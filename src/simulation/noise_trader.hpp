@@ -20,8 +20,8 @@ private:
     // Hawkes process state
     double buy_excitement = 0.0;
     double sell_excitement = 0.0;
-    double alpha = 1.5;
-    double beta = 2.0;
+    double alpha = 8.0;
+    double beta = 10.0;
 
 public:
     NoiseTrader(shared_ptr<OrderBook> book, double start_price, double arrival_rate);

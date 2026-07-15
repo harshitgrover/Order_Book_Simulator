@@ -51,9 +51,6 @@ private:
         while (best_bid_idx > 0 && bids[best_bid_idx].head == 0) {
             best_bid_idx--;
         }
-        if (best_bid_idx == 0 && bids[0].head == 0) {
-            best_bid_idx = MAX_PRICE_TICKS;
-        }
     }
 
     void updateBestAskIdxUp() {

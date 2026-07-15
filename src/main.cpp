@@ -314,6 +314,46 @@ int main(int argc, char* argv[]) {
                 res.set_content(paused ? "true" : "false", "application/json");
             });
 
+            svr.Post("/api/reset", [&](const httplib::Request& req, httplib::Response& res) {
+                lock_guard<mutex> lock(state_mutex);
+                is_bot1_paused = true;
+                is_bot2_paused = true;
+                is_gbm_paused = true;
+                
+                // Completely re-instantiate the environment
+                book = make_shared<OrderBook>();
+                trader = NoiseTrader(book, 100.0, 1.0);
+                bot = MarketMaker(book, 1.0, 0.05, 1.5, 1.0);
+                imb_bot = ImbalanceMarketMaker(book, 1.0, 0.05, 1.5, 1.0);
+                
+                res.set_header("Access-Control-Allow-Origin", "*");
+                res.set_content("true", "application/json");
+            });
+
+            svr.Post("/api/reset_bot1", [&](const httplib::Request& req, httplib::Response& res) {
+                lock_guard<mutex> lock(state_mutex);
+                is_bot1_paused = true;
+                bot = MarketMaker(book, 1.0, 0.05, 1.5, 1.0);
+                res.set_header("Access-Control-Allow-Origin", "*");
+                res.set_content("true", "application/json");
+            });
+
+            svr.Post("/api/reset_bot2", [&](const httplib::Request& req, httplib::Response& res) {
+                lock_guard<mutex> lock(state_mutex);
+                is_bot2_paused = true;
+                imb_bot = ImbalanceMarketMaker(book, 1.0, 0.05, 1.5, 1.0);
+                res.set_header("Access-Control-Allow-Origin", "*");
+                res.set_content("true", "application/json");
+            });
+
+            svr.Post("/api/reset_gbm", [&](const httplib::Request& req, httplib::Response& res) {
+                lock_guard<mutex> lock(state_mutex);
+                is_gbm_paused = true;
+                trader = NoiseTrader(book, 100.0, 1.0);
+                res.set_header("Access-Control-Allow-Origin", "*");
+                res.set_content("true", "application/json");
+            });
+
             svr.Get("/api/state", [&](const httplib::Request& req, httplib::Response& res) {
                 lock_guard<mutex> lock(state_mutex);
                 string book_json = book->toJson();

@@ -41,36 +41,54 @@
             display: flex;
             gap: 2rem;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
         }
 
         .panel {
             background: var(--panel-bg);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1.5rem 0.8rem;
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            flex: 1;
+            flex: 1 1 0;
+            min-width: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        .panel h2 {
-            margin-top: 0;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
+        .panel-header {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-header .pause-btn {
+            position: absolute;
+            right: 0;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        .panel h2 {
+            margin: 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            row-gap: 1.5rem;
+            column-gap: 0.8rem;
         }
 
         .stat-card {
             background: rgba(0, 0, 0, 0.2);
-            padding: 1.5rem;
+            padding: 1.5rem 0.8rem;
             border-radius: 12px;
             text-align: center;
         }
@@ -80,10 +98,11 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            white-space: nowrap;
         }
 
         .stat-card .value {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin-top: 0.5rem;
         }
@@ -141,49 +160,111 @@
 
         .flash-bid { animation: flash-green 0.3s ease-out; }
         .flash-ask { animation: flash-red 0.3s ease-out; }
+
+        .pause-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+        .pause-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+        .pause-btn.paused {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        .pause-btn.paused:hover {
+            background: rgba(34, 197, 94, 0.3);
+        }
     </style>
 </head>
 <body>
 
-    <h1>Limit Order Book & Avellaneda-Stoikov Simulator</h1>
+    <div style="display: flex; justify-content: center; align-items: center; max-width: 1600px; width: 100%; margin-bottom: 2rem; position: relative;">
+        <h1 style="margin-bottom: 0;">Limit Order Book & Avellaneda-Stoikov Simulator</h1>
+        <button id="pause-all" onclick="togglePauseAll()" class="pause-btn" style="position: absolute; right: 0;">⏸ Pause All</button>
+    </div>
 
     <div class="dashboard">
-        <div class="panel">
-            <h2>Bot Performance</h2>
+        <div class="panel" id="bot1-panel" style="flex: 1.2;">
+            <div class="panel-header">
+                <h2>Avellaneda-Stoikov (2008)</h2>
+                <button id="pause-bot1" onclick="togglePause('bot1')" class="pause-btn">⏸ Pause</button>
+            </div>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="label">Inventory (Shares)</div>
-                    <div class="value" id="inventory">0</div>
+                    <div class="label">Inventory</div>
+                    <div class="value" id="bot1-inventory">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="label">Mark-to-Market PnL</div>
-                    <div class="value" id="pnl">$0.00</div>
+                    <div class="label">Cash</div>
+                    <div class="value" id="bot1-cash">$0.00</div>
                 </div>
                 <div class="stat-card" style="grid-column: span 2;">
-                    <div class="label">Cash</div>
-                    <div class="value" id="cash">$0.00</div>
+                    <div class="label">Mark-to-Market PnL</div>
+                    <div class="value" id="bot1-pnl">$0.00</div>
+                </div>
+                <div class="stat-card" style="grid-column: span 2;">
+                    <div class="label">Market Midprice</div>
+                    <div class="value" id="bot1-midprice">$0.00</div>
                 </div>
                 <div class="stat-card">
                     <div class="label">Current Bid</div>
-                    <div class="value" id="current-bid">N/A</div>
+                    <div class="value" id="bot1-bid">N/A</div>
                 </div>
                 <div class="stat-card">
                     <div class="label">Current Ask</div>
-                    <div class="value" id="current-ask">N/A</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Bid Qty</div>
-                    <div class="value" id="bid-qty">N/A</div>
-                </div>
-                <div class="stat-card">
-                    <div class="label">Ask Qty</div>
-                    <div class="value" id="ask-qty">N/A</div>
+                    <div class="value" id="bot1-ask">N/A</div>
                 </div>
             </div>
         </div>
 
-        <div class="panel">
-            <h2>Live Order Book</h2>
+        <div class="panel" id="bot2-panel" style="flex: 1.2;">
+            <div class="panel-header">
+                <h2>Imbalance-Aware (2018)</h2>
+                <button id="pause-bot2" onclick="togglePause('bot2')" class="pause-btn">⏸ Pause</button>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="label">Inventory</div>
+                    <div class="value" id="bot2-inventory">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Cash</div>
+                    <div class="value" id="bot2-cash">$0.00</div>
+                </div>
+                <div class="stat-card" style="grid-column: span 2;">
+                    <div class="label">Mark-to-Market PnL</div>
+                    <div class="value" id="bot2-pnl">$0.00</div>
+                </div>
+                <div class="stat-card" style="grid-column: span 2;">
+                    <div class="label">Micro-Price</div>
+                    <div class="value" id="bot2-microprice">$0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Current Bid</div>
+                    <div class="value" id="bot2-bid">N/A</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Current Ask</div>
+                    <div class="value" id="bot2-ask">N/A</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" style="flex: 1.2;">
+            <div class="panel-header">
+                <h2>Live Order Book</h2>
+                <button id="pause-gbm" onclick="togglePause('gbm')" class="pause-btn">⏸ Pause</button>
+            </div>
             <div class="order-book">
                 <div class="book-side bids">
                     <h3>BIDS</h3>
@@ -205,7 +286,9 @@
     </div>
 
     <script>
-        let currentPnl = 0;
+        let currentPnl1 = 0;
+        let currentPnl2 = 0;
+        let activeMode = 'both';
 
         // Initialize Chart.js
         const ctx = document.getElementById('pnlChart').getContext('2d');
@@ -213,20 +296,39 @@
             type: 'line',
             data: {
                 labels: [],
-                datasets: [{
-                    label: 'Mark-to-Market PnL ($)',
-                    data: [],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4
-                }]
+                datasets: [
+                    {
+                        label: 'Avellaneda-Stoikov PnL',
+                        data: [],
+                        borderColor: '#ef4444', // Red
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Imbalance-Aware PnL',
+                        data: [],
+                        borderColor: '#22c55e', // Green
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 plugins: {
-                    legend: { display: false }
+                    legend: { 
+                        display: true, 
+                        labels: { 
+                            color: '#f8fafc',
+                            filter: function(item, chart) {
+                                return !chart.datasets[item.datasetIndex].hidden;
+                            }
+                        } 
+                    }
                 },
                 scales: {
                     x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
@@ -235,23 +337,84 @@
             }
         });
 
+        let hasStartedBot1 = false;
+        let hasStartedBot2 = false;
+        let hasStartedGbm = false;
+        let hasStartedAll = false;
+
+        function updateButtonState(btnId, isPaused, hasStarted) {
+            const btn = document.getElementById(btnId);
+            if (!btn) return hasStarted;
+            if (!isPaused) {
+                btn.textContent = '⏸ Pause';
+                btn.classList.remove('paused');
+                return true;
+            } else {
+                btn.classList.add('paused');
+                btn.textContent = hasStarted ? '▶ Resume' : '▶ Start';
+                return hasStarted;
+            }
+        }
+
         async function fetchState() {
             try {
                 const response = await fetch('/api/state');
                 const data = await response.json();
+                activeMode = data.active_mode || 'both';
                 
-                // Update bot stats
-                document.getElementById('inventory').innerText = data.bot_inventory;
-                document.getElementById('cash').innerText = '$' + data.bot_cash.toFixed(2);
+                hasStartedBot1 = updateButtonState('pause-bot1', data.is_bot1_paused, hasStartedBot1);
+                hasStartedBot2 = updateButtonState('pause-bot2', data.is_bot2_paused, hasStartedBot2);
+                hasStartedGbm = updateButtonState('pause-gbm', data.is_gbm_paused, hasStartedGbm);
                 
-                const pnlEl = document.getElementById('pnl');
-                pnlEl.innerText = '$' + data.bot_pnl.toFixed(2);
-                pnlEl.className = 'value ' + (data.bot_pnl >= 0 ? 'pnl-positive' : 'pnl-negative');
+                const allPaused = data.is_bot1_paused && data.is_bot2_paused && data.is_gbm_paused;
+                const pauseAllBtn = document.getElementById('pause-all');
+                if (!allPaused) {
+                    hasStartedAll = true;
+                    pauseAllBtn.textContent = '⏸ Pause All';
+                    pauseAllBtn.classList.remove('paused');
+                } else {
+                    pauseAllBtn.classList.add('paused');
+                    pauseAllBtn.textContent = hasStartedAll ? '▶ Resume All' : '▶ Start All';
+                }
+                
+                // Toggle visibility based on active mode
+                const bot1Panel = document.getElementById('bot1-panel');
+                const bot2Panel = document.getElementById('bot2-panel');
+                
+                if (data.active_mode === 'bot1') {
+                    bot2Panel.style.display = 'none';
+                    bot1Panel.style.display = 'block';
+                } else if (data.active_mode === 'bot2') {
+                    bot1Panel.style.display = 'none';
+                    bot2Panel.style.display = 'block';
+                } else {
+                    bot1Panel.style.display = 'block';
+                    bot2Panel.style.display = 'block';
+                }
+                
+                // Update Bot 1 (Avellaneda)
+                document.getElementById('bot1-inventory').innerText = data.bot1_inventory;
+                document.getElementById('bot1-cash').innerText = '$' + data.bot1_cash.toFixed(2);
+                document.getElementById('bot1-midprice').innerText = '$' + data.mid_price.toFixed(2);
+                
+                const pnl1El = document.getElementById('bot1-pnl');
+                pnl1El.innerText = '$' + data.bot1_pnl.toFixed(2);
+                pnl1El.className = 'value ' + (data.bot1_pnl >= 0 ? 'pnl-positive' : 'pnl-negative');
 
-                document.getElementById('current-bid').innerText = data.bot_bid > 0 ? '$' + data.bot_bid.toFixed(2) : 'N/A';
-                document.getElementById('current-ask').innerText = data.bot_ask > 0 ? '$' + data.bot_ask.toFixed(2) : 'N/A';
-                document.getElementById('bid-qty').innerText = data.bot_bid_qty > 0 ? data.bot_bid_qty : 'N/A';
-                document.getElementById('ask-qty').innerText = data.bot_ask_qty > 0 ? data.bot_ask_qty : 'N/A';
+                document.getElementById('bot1-bid').innerHTML = (data.bot1_bid > 0 && data.bot1_bid_qty > 0) ? '$' + data.bot1_bid.toFixed(2) + '<div style="font-size: 1.5rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem;">Qty: ' + data.bot1_bid_qty + '</div>' : 'N/A';
+                document.getElementById('bot1-ask').innerHTML = (data.bot1_ask > 0 && data.bot1_ask_qty > 0) ? '$' + data.bot1_ask.toFixed(2) + '<div style="font-size: 1.5rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem;">Qty: ' + data.bot1_ask_qty + '</div>' : 'N/A';
+
+                // Update Bot 2 (Imbalance)
+                document.getElementById('bot2-inventory').innerText = data.bot2_inventory;
+                document.getElementById('bot2-cash').innerText = '$' + data.bot2_cash.toFixed(2);
+                document.getElementById('bot2-microprice').innerText = '$' + data.bot2_microprice.toFixed(2);
+                
+                const pnl2El = document.getElementById('bot2-pnl');
+                pnl2El.innerText = '$' + data.bot2_pnl.toFixed(2);
+                pnl2El.className = 'value ' + (data.bot2_pnl >= 0 ? 'pnl-positive' : 'pnl-negative');
+
+                document.getElementById('bot2-bid').innerHTML = (data.bot2_bid > 0 && data.bot2_bid_qty > 0) ? '$' + data.bot2_bid.toFixed(2) + '<div style="font-size: 1.5rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem;">Qty: ' + data.bot2_bid_qty + '</div>' : 'N/A';
+                document.getElementById('bot2-ask').innerHTML = (data.bot2_ask > 0 && data.bot2_ask_qty > 0) ? '$' + data.bot2_ask.toFixed(2) + '<div style="font-size: 1.5rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem;">Qty: ' + data.bot2_ask_qty + '</div>' : 'N/A';
 
                 // Update Bids
                 const bidsContainer = document.getElementById('bids-container');
@@ -274,7 +437,8 @@
                     asksContainer.appendChild(row);
                 });
                 
-                currentPnl = data.bot_pnl;
+                currentPnl1 = data.bot1_pnl;
+                currentPnl2 = data.bot2_pnl;
             } catch (err) {
                 console.error("Failed to fetch state:", err);
             }
@@ -287,15 +451,47 @@
                             now.getSeconds().toString().padStart(2, '0');
             
             pnlChart.data.labels.push(timeStr);
-            pnlChart.data.datasets[0].data.push(currentPnl);
+            pnlChart.data.datasets[0].data.push(currentPnl1);
+            pnlChart.data.datasets[1].data.push(currentPnl2);
             
             // Keep last 30 data points
             if (pnlChart.data.labels.length > 30) {
                 pnlChart.data.labels.shift();
                 pnlChart.data.datasets[0].data.shift();
+                pnlChart.data.datasets[1].data.shift();
+            }
+            
+            if (activeMode === 'bot1') {
+                pnlChart.data.datasets[1].hidden = true;
+                pnlChart.data.datasets[0].hidden = false;
+            } else if (activeMode === 'bot2') {
+                pnlChart.data.datasets[0].hidden = true;
+                pnlChart.data.datasets[1].hidden = false;
+            } else {
+                pnlChart.data.datasets[0].hidden = false;
+                pnlChart.data.datasets[1].hidden = false;
             }
             
             pnlChart.update();
+        }
+
+        async function togglePause(target) {
+            try {
+                await fetch('/api/toggle_pause_' + target, { method: 'POST' });
+            } catch (err) {
+                console.error("Failed to toggle pause:", err);
+            }
+        }
+
+        async function togglePauseAll() {
+            try {
+                const btn = document.getElementById('pause-all');
+                const isAllPaused = btn.classList.contains('paused');
+                const newState = isAllPaused ? "false" : "true";
+                await fetch('/api/set_pause_all?state=' + newState, { method: 'POST' });
+            } catch (err) {
+                console.error("Failed to toggle all:", err);
+            }
         }
 
         // Poll API every 100ms for live book

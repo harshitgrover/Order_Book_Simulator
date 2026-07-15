@@ -5,17 +5,19 @@ using namespace std;
 NoiseTrader::NoiseTrader(shared_ptr<OrderBook> book, double start_price, double rate)
     : order_book(book), 
       gbm(start_price, 0.0, 0.05, 1.0/86400.0),
-      arrival_rate(rate), 
+      base_rate(rate), 
       next_order_id(1000000),
       generator(random_device{}()), 
-      exponential_dist(rate), 
       uniform_dist(0.0, 1.0) {}
 
 double NoiseTrader::tick() {
+    double current_rate = base_rate + buy_excitement + sell_excitement;
+    exponential_distribution<double> exponential_dist(current_rate);
     double time_to_next = exponential_dist(generator);
     double true_price = gbm.nextPrice();
     
-    Side side = (uniform_dist(generator) > 0.5) ? Side::BUY : Side::SELL;
+    double buy_prob = (base_rate/2.0 + buy_excitement) / current_rate;
+    Side side = (uniform_dist(generator) < buy_prob) ? Side::BUY : Side::SELL;
     OrderType type = (uniform_dist(generator) < 0.2) ? OrderType::MARKET : OrderType::LIMIT;
     
     Order order;
@@ -41,6 +43,17 @@ double NoiseTrader::tick() {
         order.price = 0.0;
         order_book->addMarketOrder(order);
     }
+    
+    // Hawkes Excitement Jump
+    if (side == Side::BUY) {
+        buy_excitement += alpha;
+    } else {
+        sell_excitement += alpha;
+    }
+    
+    // Hawkes Decay
+    buy_excitement *= std::exp(-beta * time_to_next);
+    sell_excitement *= std::exp(-beta * time_to_next);
     
     return time_to_next / 86400.0;
 }

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class MarketMaker {
+class ImbalanceMarketMaker {
 private:
     shared_ptr<OrderBook> order_book;
     
@@ -29,9 +29,10 @@ private:
     double order_density;
     double terminal_time;
     double current_time;
+    double last_micro_price;
 
 public:
-    MarketMaker(shared_ptr<OrderBook> book, double gamma, double sigma, double k, double T);
+    ImbalanceMarketMaker(shared_ptr<OrderBook> book, double gamma, double sigma, double k, double T);
 
     void updateInventory();
     void onTick(double dt);
@@ -39,6 +40,17 @@ public:
     
     int getInventory() const { return inventory; }
     double getCash() const { return cash; }
+    double getMicroPrice() const { 
+        double best_bid = order_book->bestBid();
+        double best_ask = order_book->bestAsk();
+        if (best_bid == 0.0 || best_ask == 0.0) return order_book->midPrice();
+        uint64_t bid_vol = order_book->bestBidVolume();
+        uint64_t ask_vol = order_book->bestAskVolume();
+        if (bid_vol + ask_vol > 0) {
+            return (best_bid * ask_vol + best_ask * bid_vol) / static_cast<double>(bid_vol + ask_vol);
+        }
+        return order_book->midPrice();
+    }
     double getPnl(double mid_price) const {
         return cash + (inventory * mid_price);
     }

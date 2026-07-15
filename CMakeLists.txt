@@ -1,8 +1,15 @@
 cmake_minimum_required(VERSION 3.14)
 project(HFTOrderBookSimulator VERSION 1.0)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Enforce Release mode (for -O3 optimizations) by default so benchmarks are accurate
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING
+      "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel."
+      FORCE)
+endif()
 
 # Core engine library
 add_library(engine src/engine/order_book.cpp)
@@ -14,7 +21,7 @@ target_include_directories(simulation PUBLIC src)
 target_link_libraries(simulation PRIVATE engine)
 
 # Bot library
-add_library(bot src/bot/market_maker.cpp)
+add_library(bot src/bot/market_maker.cpp src/bot/imbalance_bot.cpp)
 target_include_directories(bot PUBLIC src)
 target_link_libraries(bot PRIVATE engine)
 
@@ -38,10 +45,10 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 # 3. Create a test executable
-add_executable(run_tests tests/test_order_book.cpp)
+add_executable(run_tests tests/test_order_book.cpp tests/test_bots.cpp)
 
 # 4. Link your 'engine' library and Google Test
-target_link_libraries(run_tests PRIVATE engine gtest_main)
+target_link_libraries(run_tests PRIVATE engine bot gtest_main)
 
 # 5. Automatically discover tests
 include(GoogleTest)
@@ -57,4 +64,4 @@ set(BENCHMARK_ENABLE_INSTALL OFF CACHE BOOL "Disable benchmark install" FORCE)
 FetchContent_MakeAvailable(googlebenchmark)
 
 add_executable(run_benchmarks tests/benchmark_order_book.cpp)
-target_link_libraries(run_benchmarks PRIVATE engine benchmark::benchmark_main Threads::Threads)
+target_link_libraries(run_benchmarks PRIVATE engine bot benchmark::benchmark_main Threads::Threads)

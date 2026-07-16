@@ -145,7 +145,7 @@ double spread = risk_aversion * volatility * volatility * time_left + (2.0 / ris
 ```
 * **Explanation:** If the bot owns +50 shares (`inventory > 0`), the formula subtracts a massive penalty from the `mid_price`. This skews the `reservation_price` sharply downwards. The bot's Ask price becomes much cheaper (to dump inventory quickly), and its Bid price becomes extremely low (to avoid buying more).
 
-### Stoikov Micro-Price Bot: The Stoikov Micro-Price Bot Market Maker (2018)
+### Stoikov Micro-Price (Imbalance-Aware) Bot: The Stoikov Micro-Price (Imbalance-Aware) Bot Market Maker (2018)
 `stoikov_microprice_bot.cpp` is a modern upgrade. In highly volatile markets, the "mid-price" is a dangerous illusion. If there are 1,000 buy orders and 1 sell order, the price is inevitably going to go up. 
 This bot calculates the **Volume-Weighted Micro-Price** (Stoikov 2018) to anchor its quotes.
 

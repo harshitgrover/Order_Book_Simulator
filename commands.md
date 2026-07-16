@@ -81,9 +81,14 @@ Once it says it's running, open your web browser and go to:
 - **Order Cancellation:** When a bot is paused, it actively pulls all of its open quotes from the limit order book, allowing you to observe how the market reacts.
 - **Live State Viewing:** Toggle between Bot 1, Bot 2, or Both in the UI to view active Bid/Ask levels, PnL charts, and inventory without cluttering the screen.
 
-### Stopping the UI Server
-If you are running the UI server in your terminal, you can stop it by pressing `Ctrl + C`. 
-If you have started it in the background or multiple instances are somehow running, you can kill all running instances by running:
+### Stopping the UI Server / Freeing the Port
+When you start the UI server, your terminal will "get stuck" (block). This is normal! It means the server is actively listening for web traffic. 
+
+To stop the server and free up your terminal, just press `Ctrl + C`. 
+
+If you get an error that port 8080 is already in use (or if you have multiple background simulators running), you can instantly kill whatever is using port 8080 by running:
 ```bash
 killall simulator
+# OR if that doesn't work, forcefully kill anything on port 8080:
+lsof -ti:8080 | xargs kill -9
 ```

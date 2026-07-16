@@ -52,10 +52,10 @@ Run the Market Makers against noise trader events, logging data to a CSV. You ca
 ./build/simulator sim 5000 -plot
 
 # Option B: Run ONLY the Avellaneda-Stoikov bot
-./build/simulator sim 5000 avellaneda
+./build/simulator sim 5000 avellaneda -plot
 
 # Option C: Run ONLY the Imbalance-Aware bot
-./build/simulator sim 5000 imbalance
+./build/simulator sim 5000 imbalance -plot
 ```
 *The resulting graph will be saved as `performance_plot.png` in the project root.*
 

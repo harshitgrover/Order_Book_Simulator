@@ -1,0 +1,6 @@
+------------------------------------------------------------------
+Benchmark                        Time             CPU   Iterations
+------------------------------------------------------------------
+BM_OrderBook                   138 ns          138 ns      5102338
+BM_AvellanedaStoikovBot       9.23 ns         9.22 ns     75597218
+BM_StoikovMicropriceBot       11.9 ns         11.9 ns     58128913

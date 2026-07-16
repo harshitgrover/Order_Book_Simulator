@@ -63,8 +63,8 @@ Run the Market Makers against noise trader events, logging data to a CSV. You ca
 Start the C++ HTTP server, which runs the simulation continuously in the background and serves a sleek web UI on port 8080:
 
 ```bash
-# Option A: Start the UI with BOTH bots running
-./build/simulator serve 8080 both
+# Option A: Start the UI with BOTH bots running (Default)
+./build/simulator serve
 
 # Option B: Start the UI with ONLY Avellaneda-Stoikov
 ./build/simulator serve 8080 bot1
@@ -80,3 +80,10 @@ Once it says it's running, open your web browser and go to:
 - **Granular Pausing:** The simulation starts paused by default. You can independently Start/Pause **Bot 1**, **Bot 2**, or the **GBM Market (Noise Traders)**.
 - **Order Cancellation:** When a bot is paused, it actively pulls all of its open quotes from the limit order book, allowing you to observe how the market reacts.
 - **Live State Viewing:** Toggle between Bot 1, Bot 2, or Both in the UI to view active Bid/Ask levels, PnL charts, and inventory without cluttering the screen.
+
+### Stopping the UI Server
+If you are running the UI server in your terminal, you can stop it by pressing `Ctrl + C`. 
+If you have started it in the background or multiple instances are somehow running, you can kill all running instances by running:
+```bash
+killall simulator
+```

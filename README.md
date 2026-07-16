@@ -1,6 +1,6 @@
 # Limit Order Book & Trading Strategy Comparison
 
-A high-performance Limit Order Book (LOB) matching engine written in C++, complete with a stochastic market maker bot simulating real-world HFT liquidity provision, and a live web dashboard.
+A high-performance Limit Order Book (LOB) matching engine written in C++, complete with stochastic market maker bots (Avellaneda-Stoikov Bot & Stoikov Micro-Price Bot) simulating real-world HFT liquidity provision, and a live web dashboard.
 
 ## 🚀 High-Frequency Architecture
 

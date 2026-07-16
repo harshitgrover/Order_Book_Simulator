@@ -1,4 +1,4 @@
-# 📘 The Complete Deep-Dive Architecture & Code Guide: Order Book Simulator
+# 📘 The Complete Deep-Dive Architecture & Code Guide: Limit Order Book Engine & Trading Strategy Comparison
 
 This document is the **most exhaustive, file-by-file, function-by-function breakdown** of the entire Order Book Simulator project. It is designed to be your master reference for any quantitative engineering or software development interview. It covers every single line of critical logic, the mathematical models, the data structures, and the networking architecture.
 
@@ -130,7 +130,7 @@ This class mimics millions of retail investors (like Robinhood users).
 
 We implemented two different mathematical models to compare their effectiveness against toxic order flow.
 
-### Avellaneda-Stoikov Bot: The Avellaneda-Stoikov Market Maker (2008)
+### 1. Avellaneda-Stoikov Bot (2008)
 `avellaneda_stoikov_bot.cpp` translates the famous 2008 high-frequency trading research paper into C++ logic. The bot solves for optimal quotes to manage "Inventory Risk".
 
 #### The Avellaneda-Stoikov Math
@@ -145,7 +145,7 @@ double spread = risk_aversion * volatility * volatility * time_left + (2.0 / ris
 ```
 * **Explanation:** If the bot owns +50 shares (`inventory > 0`), the formula subtracts a massive penalty from the `mid_price`. This skews the `reservation_price` sharply downwards. The bot's Ask price becomes much cheaper (to dump inventory quickly), and its Bid price becomes extremely low (to avoid buying more).
 
-### Stoikov Micro-Price (Imbalance-Aware) Bot: The Stoikov Micro-Price (Imbalance-Aware) Bot Market Maker (2018)
+### 2. Stoikov Micro-Price (Imbalance-Aware) Bot (2018)
 `stoikov_microprice_bot.cpp` is a modern upgrade. In highly volatile markets, the "mid-price" is a dangerous illusion. If there are 1,000 buy orders and 1 sell order, the price is inevitably going to go up. 
 This bot calculates the **Volume-Weighted Micro-Price** (Stoikov 2018) to anchor its quotes.
 
@@ -273,3 +273,12 @@ A: In high-frequency trading, standard library containers like `std::list` are b
 
 **Q: How do you handle order modifications in your limit order book?**
 A: I engineered an in-place `modifyOrder` function that perfectly mirrors real-world exchange Queue Priority rules. If a market maker wants to *reduce* the quantity of their resting limit order, I modify the quantity integer in-place without touching the node's `prev`/`next` links, allowing them to keep their hard-earned position at the front of the line. However, if they *increase* the quantity, I detach their node from the Intrusive List and re-append it to the `tail` of the price level, forcing them to the back of the queue as a penalty for taking on more risk.
+
+**Q: In the UI Dashboard, how does the pause/resume functionality accurately reflect live market dynamics?**
+A: When you click "Pause" on a specific bot in the dashboard, it doesn't just stop generating new quotes. The backend logic actively loops through the bot's tracked `order_ids` and forcefully sends a `cancelOrder` request to the Limit Order Book for every open position. This accurately simulates a real-world "Kill Switch" where a trading firm violently pulls all liquidity from the market to avoid being picked off during a crash.
+
+**Q: How does the offline plotting script (`plot_pnl.py`) filter text metadata from the CSV results?**
+A: Because the C++ engine writes a comprehensive CSV containing both data rows and formatted text headers (e.g., `# Avellaneda-Stoikov Bot` and `--- FINAL RESULTS ---`), the Python script uses pandas' `error_bad_lines=False` or specifically skips lines starting with `#`. This ensures that `matplotlib` receives perfectly structured numerical data for the X/Y axes without breaking the graph rendering.
+
+**Q: Why does the CLI command default to running `both` bots simultaneously rather than isolated?**
+A: Running the bots in isolation proves they work, but running them simultaneously inside the exact same Limit Order Book is the true quantitative test. When run together, they actively compete for queue priority and liquidity. The 2018 Imbalance bot actually feeds off the liquidity provided by the 2008 bot. This head-to-head competition is the only way to mathematically prove that the Micro-Price anchoring outperforms naive Mid-Price anchoring in a hostile, competitive environment.

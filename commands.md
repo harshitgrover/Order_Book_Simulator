@@ -49,13 +49,13 @@ Run the Market Makers against noise trader events, logging data to a CSV. You ca
 
 ```bash
 # Option A: Run BOTH bots side-by-side and automatically plot the results
-./build/simulator sim 5000 -plot
+./build/simulator sim 500000 -plot
 
 # Option B: Run ONLY the Avellaneda-Stoikov Bot
-./build/simulator sim 5000 AS -plot
+./build/simulator sim 500000 AS -plot
 
 # Option C: Run ONLY the Stoikov Micro-Price (Imbalance-Aware) Bot
-./build/simulator sim 5000 SMP -plot
+./build/simulator sim 500000 SMP -plot
 ```
 *The resulting graph will be saved as `performance_plot.png` in the project root.*
 

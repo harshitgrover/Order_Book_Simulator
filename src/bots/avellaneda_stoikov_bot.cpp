@@ -1,13 +1,13 @@
-#include "bot/market_maker.hpp"
+#include "bots/avellaneda_stoikov_bot.hpp"
 #include <cmath>
-MarketMaker::MarketMaker(shared_ptr<OrderBook> book, double gamma, double sigma, double k, double T)
+AvellanedaStoikovBot::AvellanedaStoikovBot(shared_ptr<OrderBook> book, double gamma, double sigma, double k, double T)
     : order_book(book), inventory(0), cash(0.0), next_order_id(2000000),
       active_bid_id(0), active_bid_qty(0), active_bid_price(0.0),
       active_ask_id(0), active_ask_qty(0), active_ask_price(0.0),
       risk_aversion(gamma), volatility(sigma), order_density(k), 
       terminal_time(T), current_time(0.0) {}
 
-void MarketMaker::updateInventory() {
+void AvellanedaStoikovBot::updateInventory() {
     Order order;
     
     if (active_bid_id != 0) {
@@ -43,7 +43,7 @@ void MarketMaker::updateInventory() {
     }
 }
 
-void MarketMaker::onTick(double dt) {
+void AvellanedaStoikovBot::onTick(double dt) {
     current_time += dt;
     
     // Always update inventory (don't return early)
@@ -79,9 +79,9 @@ void MarketMaker::onTick(double dt) {
         if (affordable_qty < max_buy_qty) max_buy_qty = affordable_qty;
     }
     
-    // 2. Strict Inventory Limits (+100 and -100)
-    if (inventory < 100) {
-        uint64_t room_to_buy = static_cast<uint64_t>(100 - inventory); // safe: inventory < 100
+    // 2. Strict Inventory Limits: Max long = +500, Max short = -100
+    if (inventory < 500) {
+        uint64_t room_to_buy = static_cast<uint64_t>(500 - inventory);
         if (room_to_buy < max_buy_qty) max_buy_qty = room_to_buy;
     } else {
         max_buy_qty = 0;
@@ -147,7 +147,7 @@ void MarketMaker::onTick(double dt) {
     }
 }
 
-void MarketMaker::cancelAll() {
+void AvellanedaStoikovBot::cancelAll() {
     if (active_bid_id != 0) {
         order_book->cancelOrder(active_bid_id);
         active_bid_id = 0;

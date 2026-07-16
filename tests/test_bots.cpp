@@ -1,14 +1,14 @@
 #include <gtest/gtest.h>
 #include "engine/order_book.hpp"
-#include "bot/market_maker.hpp"
-#include "bot/imbalance_bot.hpp"
+#include "bots/avellaneda_stoikov_bot.hpp"
+#include "bots/stoikov_microprice_bot.hpp"
 #include <memory>
 
 using namespace std;
 
-TEST(BotTest, MarketMakerInitialization) {
+TEST(BotTest, AvellanedaStoikovBotInitialization) {
     auto book = make_shared<OrderBook>();
-    MarketMaker bot(book, 1.0, 0.05, 1.5, 1.0);
+    AvellanedaStoikovBot bot(book, 1.0, 0.05, 1.5, 1.0);
     
     EXPECT_EQ(bot.getInventory(), 0);
     EXPECT_EQ(bot.getCash(), 0.0);
@@ -19,9 +19,9 @@ TEST(BotTest, MarketMakerInitialization) {
     EXPECT_EQ(bot.getActiveAskQty(), 0);
 }
 
-TEST(BotTest, ImbalanceMarketMakerInitialization) {
+TEST(BotTest, StoikovMicropriceBotInitialization) {
     auto book = make_shared<OrderBook>();
-    ImbalanceMarketMaker bot(book, 1.0, 0.05, 1.5, 1.0);
+    StoikovMicropriceBot bot(book, 1.0, 0.05, 1.5, 1.0);
     
     EXPECT_EQ(bot.getInventory(), 0);
     EXPECT_EQ(bot.getCash(), 0.0);
@@ -41,14 +41,14 @@ TEST(BotTest, QuotesWhenBookHasOrders) {
     book->addLimitOrder(bid);
     book->addLimitOrder(ask);
     
-    MarketMaker bot(book, 1.0, 0.05, 1.5, 1.0);
+    AvellanedaStoikovBot bot(book, 1.0, 0.05, 1.5, 1.0);
     bot.onTick(1.0);
     
     // The bot should have placed quotes
     EXPECT_GT(bot.getActiveBidQty(), 0);
     EXPECT_GT(bot.getActiveAskQty(), 0);
     
-    ImbalanceMarketMaker imb_bot(book, 1.0, 0.05, 1.5, 1.0);
+    StoikovMicropriceBot imb_bot(book, 1.0, 0.05, 1.5, 1.0);
     imb_bot.onTick(1.0);
     
     EXPECT_GT(imb_bot.getActiveBidQty(), 0);

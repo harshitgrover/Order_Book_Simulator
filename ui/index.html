@@ -76,7 +76,7 @@
             margin: 0;
             text-align: center;
             color: var(--text-secondary);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .stats-grid {
@@ -188,9 +188,9 @@
 </head>
 <body>
 
-    <div style="display: flex; justify-content: center; align-items: center; max-width: 1600px; width: 100%; margin-bottom: 2rem; position: relative;">
-        <h1 style="margin-bottom: 0;">Limit Order Book & Avellaneda-Stoikov Simulator</h1>
-        <div style="position: absolute; right: 0; display: flex; gap: 1rem;">
+    <div style="display: flex; justify-content: flex-start; align-items: center; max-width: 1400px; width: 100%; margin-bottom: 2rem; position: relative; padding: 1rem 0;">
+        <h1 style="margin: 0; margin-left: 10rem; text-align: left;">Limit Order Book &amp; Trading Strategy Comparison</h1>
+        <div style="position: absolute; right: 0; top: 0; bottom: 0; display: flex; align-items: center; gap: 1rem;">
             <button id="reset-btn" onclick="resetSimulation()" class="pause-btn">🔄 Reset</button>
             <button id="pause-all" onclick="togglePauseAll()" class="pause-btn">⏸ Pause All</button>
         </div>
@@ -199,7 +199,7 @@
     <div class="dashboard">
         <div class="panel" id="bot1-panel" style="flex: 1.2;">
             <div class="panel-header">
-                <h2>Avellaneda-Stoikov (2008)</h2>
+                <h2>Avellaneda-Stoikov Bot</h2>
                 <div style="position: absolute; right: 0; display: flex; gap: 0.3rem;">
                     <button onclick="resetLocal('bot1')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Reset Bot 1">🔄</button>
                     <button id="pause-bot1" onclick="togglePause('bot1')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Pause/Resume Bot 1">⏸</button>
@@ -235,7 +235,7 @@
 
         <div class="panel" id="bot2-panel" style="flex: 1.2;">
             <div class="panel-header">
-                <h2>Imbalance-Aware (2018)</h2>
+                <h2>Stoikov Micro-Price Bot</h2>
                 <div style="position: absolute; right: 0; display: flex; gap: 0.3rem;">
                     <button onclick="resetLocal('bot2')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Reset Bot 2">🔄</button>
                     <button id="pause-bot2" onclick="togglePause('bot2')" class="pause-btn" style="position: static; padding: 0.3rem 0.6rem;" title="Pause/Resume Bot 2">⏸</button>
@@ -319,7 +319,7 @@
                         tension: 0.4
                     },
                     {
-                        label: 'Imbalance-Aware PnL',
+                        label: 'Stoikov Micro-Price PnL',
                         data: [],
                         borderColor: '#22c55e', // Green
                         backgroundColor: 'rgba(34, 197, 94, 0.1)',
@@ -404,7 +404,7 @@
                     bot2Panel.style.display = 'block';
                 }
                 
-                // Update Bot 1 (Avellaneda)
+                // Update Bot 1 (Avellaneda-Stoikov)
                 document.getElementById('bot1-inventory').innerText = data.bot1_inventory;
                 document.getElementById('bot1-cash').innerText = '$' + data.bot1_cash.toFixed(2);
                 document.getElementById('bot1-midprice').innerText = '$' + data.mid_price.toFixed(2);
@@ -416,7 +416,7 @@
                 document.getElementById('bot1-bid').innerHTML = (data.bot1_bid > 0 && data.bot1_bid_qty > 0) ? '$' + data.bot1_bid.toFixed(2) + '<div style="font-size: 1.5rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem;">Qty: ' + data.bot1_bid_qty + '</div>' : 'N/A';
                 document.getElementById('bot1-ask').innerHTML = (data.bot1_ask > 0 && data.bot1_ask_qty > 0) ? '$' + data.bot1_ask.toFixed(2) + '<div style="font-size: 1.5rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem;">Qty: ' + data.bot1_ask_qty + '</div>' : 'N/A';
 
-                // Update Bot 2 (Imbalance)
+                // Update Bot 2 (Stoikov Micro-Price)
                 document.getElementById('bot2-inventory').innerText = data.bot2_inventory;
                 document.getElementById('bot2-cash').innerText = '$' + data.bot2_cash.toFixed(2);
                 document.getElementById('bot2-microprice').innerText = '$' + data.bot2_microprice.toFixed(2);

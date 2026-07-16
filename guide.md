@@ -126,12 +126,12 @@ This class mimics millions of retail investors (like Robinhood users).
 
 ---
 
-## 🤖 4. The Quantitative Market Making Bots (`src/bot/`)
+## 🤖 4. The Quantitative Market Making Bots (`src/bots/`)
 
 We implemented two different mathematical models to compare their effectiveness against toxic order flow.
 
-### Bot 1: The Avellaneda-Stoikov Market Maker (2008)
-`market_maker.cpp` translates the famous 2008 high-frequency trading research paper into C++ logic. The bot solves for optimal quotes to manage "Inventory Risk".
+### Avellaneda-Stoikov Bot: The Avellaneda-Stoikov Market Maker (2008)
+`avellaneda_stoikov_bot.cpp` translates the famous 2008 high-frequency trading research paper into C++ logic. The bot solves for optimal quotes to manage "Inventory Risk".
 
 #### The Avellaneda-Stoikov Math
 ```cpp
@@ -145,8 +145,8 @@ double spread = risk_aversion * volatility * volatility * time_left + (2.0 / ris
 ```
 * **Explanation:** If the bot owns +50 shares (`inventory > 0`), the formula subtracts a massive penalty from the `mid_price`. This skews the `reservation_price` sharply downwards. The bot's Ask price becomes much cheaper (to dump inventory quickly), and its Bid price becomes extremely low (to avoid buying more).
 
-### Bot 2: The Imbalance-Aware Market Maker (2018)
-`imbalance_bot.cpp` is a modern upgrade. In highly volatile markets, the "mid-price" is a dangerous illusion. If there are 1,000 buy orders and 1 sell order, the price is inevitably going to go up. 
+### Stoikov Micro-Price Bot: The Stoikov Micro-Price Bot Market Maker (2018)
+`stoikov_microprice_bot.cpp` is a modern upgrade. In highly volatile markets, the "mid-price" is a dangerous illusion. If there are 1,000 buy orders and 1 sell order, the price is inevitably going to go up. 
 This bot calculates the **Volume-Weighted Micro-Price** (Stoikov 2018) to anchor its quotes.
 
 #### The Micro-Price Math
@@ -200,7 +200,7 @@ We use Google Benchmark to measure the absolute hardware execution time of our e
 When running `./run_benchmarks`, you will see:
 * `BM_OrderBookAddLimitOrder`: The Flat Book `std::vector` implementation executes in **~1,130 nanoseconds**.
 * `BM_LegacyMapOrderBook`: The legacy Red-Black Tree `std::map` implementation takes significantly longer, visually proving why array-based memory structures dominate in HFT.
-* `BM_ImbalanceMarketMakerTick`: The complex Micro-Price and inventory risk calculations only take **~900 nanoseconds**, proving that advanced quant math doesn't slow down the bot execution.
+* `BM_StoikovMicropriceBotTick`: The complex Micro-Price and inventory risk calculations only take **~900 nanoseconds**, proving that advanced quant math doesn't slow down the bot execution.
 
 ### Offline Analytics (`scripts/plot_pnl.py`)
 When running `sim 5000 both`, the C++ engine dumps tick-by-tick data into `sim_results.csv` for both bots.
@@ -245,7 +245,7 @@ A: We pass the incoming `Order` by value to detach it from the network/caller me
 **Q: Why did you use `[[likely]]` attributes?**
 A: In modern CPUs, instruction pipelines are deep. If an `if` statement evaluates to a branch the CPU didn't predict, the entire pipeline is flushed (costing ~15-20 CPU cycles). Since most limit orders placed inside the spread tighten the best bid/ask, we use C++20 `[[likely]]` to instruct the compiler to lay out the assembly code linearly for that specific outcome, drastically reducing branch miss latency.
 
-**Q: Why does the Imbalance bot use Micro-Price instead of Mid-Price?**
+**Q: Why does the Stoikov Micro-Price bot use Micro-Price instead of Mid-Price?**
 A: The mid-price is naive. If the book has 10,000 shares on the Bid and only 10 shares on the Ask, the true "fair value" is significantly closer to the Ask due to massive buying pressure. The Stoikov 2018 Volume-Weighted Micro-Price mathematically models this imbalance. By anchoring to the micro-price, the bot stops getting "run over" by toxic institutional order flow.
 
 **Q: What happens if two orders arrive at the exact same timestamp?**

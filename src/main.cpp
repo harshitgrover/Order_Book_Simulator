@@ -1,7 +1,7 @@
 #include "engine/order_book.hpp"
 #include "simulation/noise_trader.hpp"
-#include "bot/market_maker.hpp"
-#include "bot/imbalance_bot.hpp"
+#include "bots/avellaneda_stoikov_bot.hpp"
+#include "bots/stoikov_microprice_bot.hpp"
 #include "httplib.h"
 #include <fstream>
 #include <iostream>
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
              << "  buy <price> <qty>\n  sell <price> <qty>\n"
              << "  market buy <qty>\n  market sell <qty>\n"
              << "  ioc buy <price> <qty>\n  ioc sell <price> <qty>\n"
-             << "  modify <order_id> <qty>\n  cancel <order_id>\n  book\n  bench\n  sim <steps> [avellaneda|imbalance|both]\n  serve [port] [bot1|bot2|both]\n  quit\n";
+             << "  modify <order_id> <qty>\n  cancel <order_id>\n  book\n  bench\n  sim <steps> [as|smp|both]\n  serve [port] [as|smp|both]\n  quit\n";
     }
 
     while (true) {
@@ -142,96 +142,101 @@ int main(int argc, char* argv[]) {
             while (iss >> token) {
                 if (token == "-plot") {
                     do_plot = true;
-                } else if (token == "avellaneda" || token == "imbalance" || token == "both") {
+                } else if (token == "as" || token == "AS" || token == "smp" || token == "SMP" || token == "both" || token == "BOTH") {
                     mode = token;
                 }
             }
 
             NoiseTrader trader(book, 100.0, 1.0);
-            MarketMaker bot(book, 1.0, 0.05, 1.5, 1.0);
-            ImbalanceMarketMaker imb_bot(book, 1.0, 0.05, 1.5, 1.0);
+            AvellanedaStoikovBot bot(book, 1.0, 0.05, 1.5, 1.0);
+            StoikovMicropriceBot imb_bot(book, 1.0, 0.05, 1.5, 1.0);
             
-            ofstream csv_file("sim_results.csv");
-            if (mode == "both") {
-                csv_file << "# Avellaneda-Stoikov (2008) vs Imbalance-Aware (2018)\n\n";
-                csv_file << "Step,Inventory Avellaneda,PnL Avellaneda,Inventory Imbalance,PnL Imbalance\n\n";
-            } else if (mode == "avellaneda") {
-                csv_file << "# Avellaneda-Stoikov (2008)\n\n";
-                csv_file << "Step,Inventory Avellaneda,PnL Avellaneda\n\n";
-            } else if (mode == "imbalance") {
-                csv_file << "# Imbalance-Aware (2018)\n\n";
-                csv_file << "Step,Inventory Imbalance,PnL Imbalance\n\n";
+            string csv_name = "sim_results.csv";
+            if (mode == "as" || mode == "AS") csv_name = "sim_results_AS.csv";
+            else if (mode == "smp" || mode == "SMP") csv_name = "sim_results_SMP.csv";
+            
+            ofstream csv_file(csv_name);
+            if (mode == "both" || mode == "BOTH") {
+                csv_file << "# Avellaneda-Stoikov Bot vs Stoikov Micro-Price Bot\n\n";
+                csv_file << "Step,AS Inventory,AS PnL,SMP Inventory,SMP PnL\n\n";
+            } else if (mode == "as" || mode == "AS") {
+                csv_file << "# Avellaneda-Stoikov Bot\n\n";
+                csv_file << "Step,AS Inventory,AS PnL\n\n";
+            } else if (mode == "smp" || mode == "SMP") {
+                csv_file << "# Stoikov Micro-Price Bot\n\n";
+                csv_file << "Step,SMP Inventory,SMP PnL\n\n";
             }
 
             cout << "  Simulating " << steps << " market events (Mode: " << mode << ")...\n";
             for (int i = 0; i < steps; ++i) {
                 double dt = trader.tick();
-                if (mode == "imbalance" || mode == "both") imb_bot.onTick(dt);
-                if (mode == "avellaneda" || mode == "both") bot.onTick(dt);
+                if (mode == "smp" || mode == "SMP" || mode == "both" || mode == "BOTH") imb_bot.onTick(dt);
+                if (mode == "as" || mode == "AS" || mode == "both" || mode == "BOTH") bot.onTick(dt);
                 
                 if (i % 5 == 0) {
-                    if (mode == "both") {
+                    if (mode == "both" || mode == "BOTH") {
                         csv_file << i << "," << bot.getInventory() << "," << bot.getPnl(book->midPrice()) << ","
                                  << imb_bot.getInventory() << "," << imb_bot.getPnl(book->midPrice()) << "\n";
-                    } else if (mode == "avellaneda") {
+                    } else if (mode == "as" || mode == "AS") {
                         csv_file << i << "," << bot.getInventory() << "," << bot.getPnl(book->midPrice()) << "\n";
-                    } else if (mode == "imbalance") {
+                    } else if (mode == "smp" || mode == "SMP") {
                         csv_file << i << "," << imb_bot.getInventory() << "," << imb_bot.getPnl(book->midPrice()) << "\n";
                     }
                 }
             }
             csv_file.close();
             
-            cout << "  Simulation complete. Results saved to sim_results.csv\n\n";
-            cout << "  ================ FINAL RESULTS ================\n";
-            if (mode == "avellaneda" || mode == "both") {
-                cout << "  [Avellaneda-Stoikov 2008]\n";
-                cout << "    Final PnL:       $" << bot.getPnl(book->midPrice()) << "\n";
-                cout << "    Final Cash:      $" << bot.getCash() << "\n";
-                cout << "    Final Inventory: " << bot.getInventory() << "\n";
-            }
-            if (mode == "imbalance" || mode == "both") {
-                cout << "  [Imbalance-Aware 2018]\n";
-                cout << "    Final PnL:       $" << imb_bot.getPnl(book->midPrice()) << "\n";
-                cout << "    Final Cash:      $" << imb_bot.getCash() << "\n";
-                cout << "    Final Inventory: " << imb_bot.getInventory() << "\n";
-            }
-            cout << "  ===============================================\n";
+            cout << "  Simulation complete. Results saved to " << csv_name << "\n\n";
             
-            ofstream append_csv("sim_results.csv", ios_base::app);
+            ofstream append_csv(csv_name, ios_base::app);
             append_csv << "\n# SUMMARY STATS\n\n";
-            if (mode == "both" || mode == "avellaneda") {
-                append_csv << "# Avellaneda-Stoikov PnL:       " << bot.getPnl(book->midPrice()) << "\n";
-                append_csv << "# Avellaneda-Stoikov Cash:      " << bot.getCash() << "\n";
-                append_csv << "# Avellaneda-Stoikov Inventory: " << bot.getInventory() << "\n\n";
+            if (mode == "both" || mode == "BOTH" || mode == "as" || mode == "AS") {
+                append_csv << "# Avellaneda-Stoikov Bot\n";
+                append_csv << "PnL:       " << bot.getPnl(book->midPrice()) << "\n";
+                append_csv << "Cash:      " << bot.getCash() << "\n";
+                append_csv << "Inventory: " << bot.getInventory() << "\n\n";
             }
-            if (mode == "both" || mode == "imbalance") {
-                append_csv << "# Imbalance-Aware PnL:          " << imb_bot.getPnl(book->midPrice()) << "\n";
-                append_csv << "# Imbalance-Aware Cash:         " << imb_bot.getCash() << "\n";
-                append_csv << "# Imbalance-Aware Inventory:    " << imb_bot.getInventory() << "\n";
+            if (mode == "both" || mode == "BOTH" || mode == "smp" || mode == "SMP") {
+                append_csv << "# Stoikov Micro-Price Bot\n";
+                append_csv << "PnL:       " << imb_bot.getPnl(book->midPrice()) << "\n";
+                append_csv << "Cash:      " << imb_bot.getCash() << "\n";
+                append_csv << "Inventory: " << imb_bot.getInventory() << "\n";
+            }
+            
+            if (mode == "both" || mode == "BOTH") {
+                double pnl1 = bot.getPnl(book->midPrice());
+                double pnl2 = imb_bot.getPnl(book->midPrice());
+                if (pnl1 > pnl2) {
+                    append_csv << "\n# WINNER: Avellaneda-Stoikov Bot\n";
+                } else if (pnl2 > pnl1) {
+                    append_csv << "\n# WINNER: Stoikov Micro-Price Bot\n";
+                } else {
+                    append_csv << "\n# WINNER: Tie!\n";
+                }
             }
             append_csv.close();
             
             if (do_plot) {
                 cout << "  Generating plot...\n";
-                system("./venv/bin/python3 scripts/plot_pnl.py &");
+                string py_cmd = "./venv/bin/python3 scripts/plot_pnl.py " + csv_name;
+                system(py_cmd.c_str());
             }
         } else if (cmd == "serve") {
             int port = 8080;
             string mode = "both";
             string arg1;
             if (iss >> arg1) {
-                if (arg1 == "bot1" || arg1 == "bot2" || arg1 == "both" || arg1 == "avellaneda" || arg1 == "imbalance") {
+                if (arg1 == "bot1" || arg1 == "bot2" || arg1 == "both" || arg1 == "BOTH" || arg1 == "as" || arg1 == "AS" || arg1 == "smp" || arg1 == "SMP") {
                     mode = arg1;
-                    if (mode == "avellaneda") mode = "bot1";
-                    if (mode == "imbalance") mode = "bot2";
+                    if (mode == "as" || mode == "AS") mode = "bot1";
+                    if (mode == "smp" || mode == "SMP") mode = "bot2";
                 } else {
                     try { port = stoi(arg1); } catch(...) {}
                     string arg2;
                     if (iss >> arg2) {
                         mode = arg2;
-                        if (mode == "avellaneda") mode = "bot1";
-                        if (mode == "imbalance") mode = "bot2";
+                        if (mode == "as" || mode == "AS") mode = "bot1";
+                        if (mode == "smp" || mode == "SMP") mode = "bot2";
                     }
                 }
             }
@@ -243,8 +248,8 @@ int main(int argc, char* argv[]) {
             mutex state_mutex;
             
             NoiseTrader trader(book, 100.0, 1.0);
-            MarketMaker bot(book, 1.0, 0.05, 1.5, 1.0);
-            ImbalanceMarketMaker imb_bot(book, 1.0, 0.05, 1.5, 1.0);
+            AvellanedaStoikovBot bot(book, 1.0, 0.05, 1.5, 1.0);
+            StoikovMicropriceBot imb_bot(book, 1.0, 0.05, 1.5, 1.0);
             
             thread sim_thread([&]() {
                 while (running) {
@@ -256,8 +261,8 @@ int main(int argc, char* argv[]) {
                             if (!is_gbm_paused) {
                                 dt = trader.tick();
                             }
-                            if (!is_bot2_paused && (mode == "bot2" || mode == "both")) imb_bot.onTick(dt);
-                            if (!is_bot1_paused && (mode == "bot1" || mode == "both")) bot.onTick(dt);
+                            if (!is_bot2_paused && (mode == "bot2" || mode == "both" || mode == "BOTH")) imb_bot.onTick(dt);
+                            if (!is_bot1_paused && (mode == "bot1" || mode == "both" || mode == "BOTH")) bot.onTick(dt);
                         }
                     }
                     this_thread::sleep_for(milliseconds(100)); // 10 frames per second = 500 ticks/sec
@@ -323,8 +328,8 @@ int main(int argc, char* argv[]) {
                 // Completely re-instantiate the environment
                 book = make_shared<OrderBook>();
                 trader = NoiseTrader(book, 100.0, 1.0);
-                bot = MarketMaker(book, 1.0, 0.05, 1.5, 1.0);
-                imb_bot = ImbalanceMarketMaker(book, 1.0, 0.05, 1.5, 1.0);
+                bot = AvellanedaStoikovBot(book, 1.0, 0.05, 1.5, 1.0);
+                imb_bot = StoikovMicropriceBot(book, 1.0, 0.05, 1.5, 1.0);
                 
                 res.set_header("Access-Control-Allow-Origin", "*");
                 res.set_content("true", "application/json");
@@ -333,7 +338,7 @@ int main(int argc, char* argv[]) {
             svr.Post("/api/reset_bot1", [&](const httplib::Request& req, httplib::Response& res) {
                 lock_guard<mutex> lock(state_mutex);
                 is_bot1_paused = true;
-                bot = MarketMaker(book, 1.0, 0.05, 1.5, 1.0);
+                bot = AvellanedaStoikovBot(book, 1.0, 0.05, 1.5, 1.0);
                 res.set_header("Access-Control-Allow-Origin", "*");
                 res.set_content("true", "application/json");
             });
@@ -341,7 +346,7 @@ int main(int argc, char* argv[]) {
             svr.Post("/api/reset_bot2", [&](const httplib::Request& req, httplib::Response& res) {
                 lock_guard<mutex> lock(state_mutex);
                 is_bot2_paused = true;
-                imb_bot = ImbalanceMarketMaker(book, 1.0, 0.05, 1.5, 1.0);
+                imb_bot = StoikovMicropriceBot(book, 1.0, 0.05, 1.5, 1.0);
                 res.set_header("Access-Control-Allow-Origin", "*");
                 res.set_content("true", "application/json");
             });
@@ -397,6 +402,7 @@ int main(int argc, char* argv[]) {
             svr.set_mount_point("/", "ui");
             
             cout << "  Starting simulation and HTTP server on port " << port << "...\n";
+            cout << "  -> Open your browser at: http://localhost:" << port << "/\n";
             svr.listen("0.0.0.0", port);
             
             running = false;

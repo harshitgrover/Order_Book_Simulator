@@ -1,4 +1,4 @@
-# Limit Order Book & Avellaneda-Stoikov Simulator
+# Limit Order Book & Trading Strategy Comparison
 
 A high-performance Limit Order Book (LOB) matching engine written in C++, complete with a stochastic market maker bot simulating real-world HFT liquidity provision, and a live web dashboard.
 
@@ -11,7 +11,7 @@ A high-performance Limit Order Book (LOB) matching engine written in C++, comple
 - **Hardware-Level Optimization:** Utilizes zero-copy `std::move` semantics and C++20 `[[likely]]` / `[[unlikely]]` branch prediction hints to process orders with extreme low latency.
 - **In-Place Order Modification:** Features a `modifyOrder` function that accurately simulates exchange Queue Priority. Decreasing an order's quantity modifies the node in-place to preserve its queue position, while increasing the quantity drops the order to the back of the queue.
 - **Avellaneda-Stoikov Market Maker:** Implements the classic 2008 quantitative model for optimal market making, skewing quotes based on inventory risk and market volatility.
-- **Imbalance-Aware (Micro-Price) Bot:** Implements a modern 2018 variation that anchors to a Volume-Weighted Micro-Price, defending against toxic order flow while maintaining strict inventory limits.
+- **Stoikov Micro-Price Bot:** Implements a modern 2018 variation that anchors to a Volume-Weighted Micro-Price, defending against toxic order flow while maintaining strict inventory limits.
 - **Hawkes Process Trade Clustering:** The retail Noise Traders use a self-exciting Hawkes Process (instead of a static Poisson distribution) to simulate realistic market panics, flash crashes, and FOMO momentum bursts.
 - **Multi-threaded Web Dashboard:** Uses `cpp-httplib` to embed an HTTP server directly into the C++ backend. Serves a real-time Vanilla JS/HTML dashboard with live Chart.js PnL plots without blocking the hyper-fast execution of the trading engine.
 - **Interactive Simulation Controls:** Features granular Play/Pause functionality. The simulation starts paused by default, allowing you to independently toggle the Market Maker bots or the Noise Traders. When paused, bots dynamically pull their active orders from the Limit Order Book.
@@ -39,8 +39,8 @@ A high-performance Limit Order Book (LOB) matching engine written in C++, comple
 │   │   ├── price_process.hpp  # Geometric Brownian Motion math
 │   │   └── noise_trader.cpp   # Random retail flow generator
 │   ├── bot/
-│   │   ├── market_maker.cpp   # Avellaneda-Stoikov 2008 bot
-│   │   └── imbalance_bot.cpp  # Micro-Price 2018 bot
+│   │   ├── avellaneda_stoikov_bot.cpp   # Avellaneda-Stoikov 2008 bot
+│   │   └── stoikov_microprice_bot.cpp  # Stoikov Micro-Price 2018 Bot
 │   ├── httplib.h              # C++ Web Server library
 │   └── main.cpp               # Multi-threading & CLI entry point
 ├── ui/

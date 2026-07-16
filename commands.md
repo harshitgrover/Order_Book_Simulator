@@ -45,17 +45,17 @@ Test the raw matching engine throughput and bot latency (processes at sub-micros
 ```
 
 ## 4. Run the Bot Simulation & Plot PnL (Phase 5)
-Run the Market Makers against noise trader events, logging data to a CSV. You can choose to run the classic Avellaneda-Stoikov bot, the modern Imbalance-Aware bot, or both simultaneously!
+Run the Market Makers against noise trader events, logging data to a CSV. You can choose to run the classic Avellaneda-Stoikov Bot, the modern Stoikov Micro-Price Bot, or both simultaneously!
 
 ```bash
 # Option A: Run BOTH bots side-by-side and automatically plot the results
 ./build/simulator sim 5000 -plot
 
-# Option B: Run ONLY the Avellaneda-Stoikov bot
-./build/simulator sim 5000 avellaneda -plot
+# Option B: Run ONLY the Avellaneda-Stoikov Bot
+./build/simulator sim 5000 AS -plot
 
-# Option C: Run ONLY the Imbalance-Aware bot
-./build/simulator sim 5000 imbalance -plot
+# Option C: Run ONLY the Stoikov Micro-Price Bot
+./build/simulator sim 5000 SMP -plot
 ```
 *The resulting graph will be saved as `performance_plot.png` in the project root.*
 
@@ -66,11 +66,11 @@ Start the C++ HTTP server, which runs the simulation continuously in the backgro
 # Option A: Start the UI with BOTH bots running (Default)
 ./build/simulator serve
 
-# Option B: Start the UI with ONLY Avellaneda-Stoikov
-./build/simulator serve 8080 bot1
+# Option B: Start the UI with ONLY Avellaneda-Stoikov Bot
+./build/simulator serve AS
 
-# Option C: Start the UI with ONLY Imbalance-Aware
-./build/simulator serve 8080 bot2
+# Option C: Start the UI with ONLY Stoikov Micro-Price Bot
+./build/simulator serve SMP
 ```
 
 Once it says it's running, open your web browser and go to:

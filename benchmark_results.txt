@@ -1,6 +1,6 @@
 ------------------------------------------------------------------
 Benchmark                        Time             CPU   Iterations
 ------------------------------------------------------------------
-BM_OrderBook                   135 ns          135 ns      5263791
-BM_AvellanedaStoikovBot       49.7 ns         49.7 ns     14187818
-BM_ImbalanceAwareBot          53.4 ns         53.3 ns     13204308
+BM_OrderBook                   143 ns          143 ns      4955647
+BM_AvellanedaStoikovBot       9.56 ns         9.54 ns     74444326
+BM_StoikovMicropriceBot       15.2 ns         15.1 ns     54448437

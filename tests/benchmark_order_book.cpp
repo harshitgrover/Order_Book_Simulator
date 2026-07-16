@@ -1,8 +1,8 @@
 #include <benchmark/benchmark.h>
 #include "engine/order_book.hpp"
 #include "engine/order.hpp"
-#include "bot/market_maker.hpp"
-#include "bot/imbalance_bot.hpp"
+#include "bots/avellaneda_stoikov_bot.hpp"
+#include "bots/stoikov_microprice_bot.hpp"
 #include <vector>
 #include <memory>
 #include <map>
@@ -37,7 +37,7 @@ BENCHMARK(BM_OrderBook) // This is the modern vector Flat Book
         return copy[static_cast<size_t>(copy.size() * 0.99)];
     });
 
-// Benchmark MarketMaker (Avellaneda-Stoikov) processing time
+// Benchmark AvellanedaStoikovBot (Avellaneda-Stoikov) processing time
 static void BM_AvellanedaStoikovBot(benchmark::State& state) {
     auto book = std::make_shared<OrderBook>();
     
@@ -46,7 +46,7 @@ static void BM_AvellanedaStoikovBot(benchmark::State& state) {
     book->addLimitOrder(bid);
     book->addLimitOrder(ask);
 
-    MarketMaker bot(book, 1.0, 0.05, 1.5, 1.0);
+    AvellanedaStoikovBot bot(book, 1.0, 0.05, 1.5, 1.0);
 
     for (auto _ : state) {
         bot.onTick(1.0);
@@ -54,8 +54,8 @@ static void BM_AvellanedaStoikovBot(benchmark::State& state) {
 }
 BENCHMARK(BM_AvellanedaStoikovBot)->Unit(benchmark::kNanosecond);
 
-// Benchmark ImbalanceMarketMaker processing time
-static void BM_ImbalanceAwareBot(benchmark::State& state) {
+// Benchmark StoikovMicropriceBot processing time
+static void BM_StoikovMicropriceBot(benchmark::State& state) {
     auto book = std::make_shared<OrderBook>();
     
     Order bid{1, Side::BUY, OrderType::LIMIT, 100.0, 10, 0};
@@ -63,10 +63,10 @@ static void BM_ImbalanceAwareBot(benchmark::State& state) {
     book->addLimitOrder(bid);
     book->addLimitOrder(ask);
 
-    ImbalanceMarketMaker bot(book, 1.0, 0.05, 1.5, 1.0);
+    StoikovMicropriceBot bot(book, 1.0, 0.05, 1.5, 1.0);
 
     for (auto _ : state) {
         bot.onTick(1.0);
     }
 }
-BENCHMARK(BM_ImbalanceAwareBot)->Unit(benchmark::kNanosecond);
+BENCHMARK(BM_StoikovMicropriceBot)->Unit(benchmark::kNanosecond);

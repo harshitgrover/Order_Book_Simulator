@@ -12,6 +12,7 @@
 #include <thread>
 #include <vector>
 #include <algorithm>
+#include <filesystem>
 
 using namespace std;
 using namespace std::chrono;
@@ -147,13 +148,14 @@ int main(int argc, char* argv[]) {
                 }
             }
 
+            std::filesystem::create_directory("simulation_results");
             NoiseTrader trader(book, 100.0, 1.0);
             AvellanedaStoikovBot bot(book, 1.0, 0.05, 1.5, 1.0);
             StoikovMicropriceBot imb_bot(book, 1.0, 0.05, 1.5, 1.0);
             
-            string csv_name = "sim_results.csv";
-            if (mode == "as" || mode == "AS") csv_name = "sim_results_AS.csv";
-            else if (mode == "smp" || mode == "SMP") csv_name = "sim_results_SMP.csv";
+            string csv_name = "simulation_results/sim_results.csv";
+            if (mode == "as" || mode == "AS") csv_name = "simulation_results/sim_results_AS.csv";
+            else if (mode == "smp" || mode == "SMP") csv_name = "simulation_results/sim_results_SMP.csv";
             
             ofstream csv_file(csv_name);
             if (mode == "both" || mode == "BOTH") {
@@ -247,6 +249,8 @@ int main(int argc, char* argv[]) {
             atomic<bool> is_gbm_paused{true};
             mutex state_mutex;
             
+            std::filesystem::create_directory("simulation_results");
+
             NoiseTrader trader(book, 100.0, 1.0);
             AvellanedaStoikovBot bot(book, 1.0, 0.05, 1.5, 1.0);
             StoikovMicropriceBot imb_bot(book, 1.0, 0.05, 1.5, 1.0);

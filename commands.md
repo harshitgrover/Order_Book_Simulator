@@ -41,7 +41,7 @@ Test the raw matching engine throughput and bot latency (processes at sub-micros
 ./build/run_benchmarks
 
 # Run benchmarks and save the output to a text file
-./build/run_benchmarks > benchmark_results.txt
+./build/run_benchmarks > simulation_results/benchmark_results.txt
 ```
 
 ## 4. Run the Bot Simulation & Plot PnL (Phase 5)
@@ -57,7 +57,7 @@ Run the Market Makers against noise trader events, logging data to a CSV. You ca
 # Option C: Run ONLY the Stoikov Micro-Price (Imbalance-Aware) Bot
 ./build/simulator sim 500000 SMP -plot
 ```
-*The resulting graph will be saved as `performance_plot.png` in the project root.*
+*The resulting graph will be saved as `performance_plot.png` in the `simulation_results/` directory.*
 
 ## 5. Run the Live UI Dashboard (Phase 6)
 Start the C++ HTTP server, which runs the simulation continuously in the background and serves a sleek web UI on port 8080:

@@ -20,7 +20,7 @@ def main():
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
 
-    output_name = 'performance_plot.png'
+    output_name = os.path.join(os.path.dirname(file_path), "performance_plot.png")
     
     # Text box properties for the stats box at the top right
     props = dict(boxstyle='round', facecolor='black', alpha=0.8, edgecolor='gray')
@@ -28,7 +28,7 @@ def main():
                        bbox=props, color='white', fontweight='bold', family='monospace')
 
     if 'AS PnL' in df.columns and 'SMP PnL' in df.columns:
-        output_name = 'performance_plot.png'
+        output_name = os.path.join(os.path.dirname(file_path), "performance_plot.png")
         ax1.plot(df['Step'], df['AS PnL'], color='red', label='Avellaneda-Stoikov PnL', linewidth=2)
         ax1.plot(df['Step'], df['SMP PnL'], color='green', label='Stoikov Micro-Price PnL', linewidth=2)
         fig.text(0.05, 0.92, 'Trading Bots Strategy Comparison', fontsize=14, fontweight='bold', va='center', ha='left')
@@ -44,7 +44,7 @@ def main():
         ax2.plot(df['Step'], df['SMP Inventory'], color='green', label='Stoikov Micro-Price Inventory', linewidth=2)
 
     elif 'AS PnL' in df.columns:
-        output_name = 'performance_plot_AS.png'
+        output_name = os.path.join(os.path.dirname(file_path), "performance_plot_AS.png")
         ax1.plot(df['Step'], df['AS PnL'], color='red', label='Avellaneda-Stoikov PnL', linewidth=2)
         fig.text(0.05, 0.92, 'Trading Bot Performance (Avellaneda-Stoikov Bot)', fontsize=14, fontweight='bold', va='center', ha='left')
         
@@ -55,7 +55,7 @@ def main():
         ax2.plot(df['Step'], df['AS Inventory'], color='red', label='Avellaneda-Stoikov Inventory', linewidth=2)
 
     elif 'SMP PnL' in df.columns:
-        output_name = 'performance_plot_SMP.png'
+        output_name = os.path.join(os.path.dirname(file_path), "performance_plot_SMP.png")
         ax1.plot(df['Step'], df['SMP PnL'], color='green', label='Stoikov Micro-Price PnL', linewidth=2)
         fig.text(0.05, 0.92, 'Trading Bot Performance (Stoikov Micro-Price Bot)', fontsize=14, fontweight='bold', va='center', ha='left')
         

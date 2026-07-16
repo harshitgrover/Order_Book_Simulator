@@ -21,7 +21,7 @@ private:
     bool use_hawkes = true; // Set to true to re-enable Hawkes FOMO
     double buy_excitement = 0.0;
     double sell_excitement = 0.0;
-    double alpha = 10.0;
+    double alpha = 15.0;
     double beta = 20.0;
 
 public:

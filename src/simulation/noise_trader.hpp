@@ -18,13 +18,17 @@ private:
     uniform_real_distribution<double> uniform_dist;
 
     // Hawkes process state
+    bool use_hawkes = true; // Set to true to re-enable Hawkes FOMO
     double buy_excitement = 0.0;
     double sell_excitement = 0.0;
-    double alpha = 8.0;
-    double beta = 10.0;
+    double alpha = 10.0;
+    double beta = 20.0;
 
 public:
     NoiseTrader(shared_ptr<OrderBook> book, double start_price, double arrival_rate);
 
     double tick();
+    
+    void setHawkes(bool enabled) { use_hawkes = enabled; }
+    bool getHawkes() const { return use_hawkes; }
 };

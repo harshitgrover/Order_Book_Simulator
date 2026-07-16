@@ -292,7 +292,7 @@
 
     <div class="dashboard" style="margin-top: 2rem;">
         <div class="panel" style="width: 100%;">
-            <h2>PnL History (Updates every 60s)</h2>
+            <h2>PnL History (Updates every 20s)</h2>
             <canvas id="pnlChart" height="60"></canvas>
         </div>
     </div>
@@ -500,6 +500,14 @@
             }
         }
 
+        async function toggleHawkes() {
+            try {
+                await fetch('/api/toggle_hawkes', { method: 'POST' });
+            } catch (err) {
+                console.error("Failed to toggle hawkes:", err);
+            }
+        }
+
         async function togglePauseAll() {
             try {
                 const btn = document.getElementById('pause-all');
@@ -544,9 +552,9 @@
         // Poll API every 100ms for live book
         setInterval(fetchState, 100);
         
-        // Update Chart every 1 second
-        setTimeout(updateChart, 1000);
-        setInterval(updateChart, 1000);
+        // Update Chart every 20 seconds
+        setTimeout(updateChart, 20000);
+        setInterval(updateChart, 20000);
     </script>
 </body>
 </html>

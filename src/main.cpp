@@ -354,6 +354,13 @@ int main(int argc, char* argv[]) {
                 res.set_content("true", "application/json");
             });
 
+            svr.Post("/api/toggle_hawkes", [&](const httplib::Request& req, httplib::Response& res) {
+                lock_guard<mutex> lock(state_mutex);
+                trader.setHawkes(!trader.getHawkes());
+                res.set_header("Access-Control-Allow-Origin", "*");
+                res.set_content(trader.getHawkes() ? "true" : "false", "application/json");
+            });
+
             svr.Get("/api/state", [&](const httplib::Request& req, httplib::Response& res) {
                 lock_guard<mutex> lock(state_mutex);
                 string book_json = book->toJson();
@@ -380,7 +387,8 @@ int main(int argc, char* argv[]) {
                    << "\"active_mode\": \"" << mode << "\", "
                    << "\"is_bot1_paused\": " << (is_bot1_paused ? "true" : "false") << ", "
                    << "\"is_bot2_paused\": " << (is_bot2_paused ? "true" : "false") << ", "
-                   << "\"is_gbm_paused\": " << (is_gbm_paused ? "true" : "false") << "}";
+                   << "\"is_gbm_paused\": " << (is_gbm_paused ? "true" : "false") << ", "
+                   << "\"is_hawkes_enabled\": " << (trader.getHawkes() ? "true" : "false") << "}";
                    
                 res.set_header("Access-Control-Allow-Origin", "*");
                 res.set_content(ss.str(), "application/json");

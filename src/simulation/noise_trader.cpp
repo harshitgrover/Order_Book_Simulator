@@ -45,15 +45,20 @@ double NoiseTrader::tick() {
     }
     
     // Hawkes Excitement Jump
-    if (side == Side::BUY) {
-        buy_excitement += alpha;
+    if (use_hawkes) {
+        if (side == Side::BUY) {
+            buy_excitement += alpha;
+        } else {
+            sell_excitement += alpha;
+        }
+        
+        // Decay the excitement over the time that just passed
+        buy_excitement *= exp(-beta * time_to_next);
+        sell_excitement *= exp(-beta * time_to_next);
     } else {
-        sell_excitement += alpha;
+        buy_excitement = 0.0;
+        sell_excitement = 0.0;
     }
-    
-    // Hawkes Decay
-    buy_excitement *= std::exp(-beta * time_to_next);
-    sell_excitement *= std::exp(-beta * time_to_next);
     
     return time_to_next / 86400.0;
 }

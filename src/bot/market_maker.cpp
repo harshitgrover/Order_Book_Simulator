@@ -64,9 +64,8 @@ void MarketMaker::onTick(double dt) {
     bid_quote = round(bid_quote * 100.0) / 100.0;
     ask_quote = round(ask_quote * 100.0) / 100.0;
     
-    if (active_bid_id != 0) order_book->cancelOrder(active_bid_id);
-    if (active_ask_id != 0) order_book->cancelOrder(active_ask_id);
     
+
     uint64_t desired_qty = 10;
     
     // 1. Strict Cash Limit (-$1000)
